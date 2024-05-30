@@ -6,7 +6,9 @@ const app = express()
 app.use(express.json())
 app.use(express.text())
 
-
+app.get("/", (req, res)=>{
+    res.send("This is home route")
+})
 
 const PORT = process.env.PORT || 1234
 
@@ -20,3 +22,67 @@ app.listen(PORT, async()=>{
         console.log(error);
     }
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
