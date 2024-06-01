@@ -1,88 +1,48 @@
-const express = require("express")
-const  mongoose  = require("mongoose")
+const express = require("express");
+const { connection } = require("./config/database");
+const jwt = require("jsonwebtoken");
+const { blackList } = require("./blacklist/blacklisUser");
+const {userRouter} = require("./routes/userRoutes");
+const userRoutes =  require("./routes/userRoutes");
+const { middleware } = require("./middleware/authMiddleware");
+const { accessMiddleware } = require("./middleware/accesszUser");
 
 const app = express()
-
 app.use(express.json())
 app.use(express.text())
+app.use("/try", userRouter)
 
-app.get("/", (req, res)=>{
-    res.send("This is home route")
+// acces by buyer and seller
+app.get("/product", middleware,  (req, res)=>{
+    res.send("product data")
 })
 
-const PORT = process.env.PORT || 1234
 
 
-app.listen(PORT, async()=>{
+// acces by buyer and seller
+app.get("/sales",middleware,  (req, res)=>{
+    res.send("sales data")
+})
+
+// acces by seller
+app.patch("/product/:id",middleware,  (req, res)=>{
+    res.send("product data updated")
+})
+
+// acces by seller
+app.delete("/product/:id",middleware, (req, res)=>{
+    res.send("product data deleted")
+})
+
+
+
+
+app.listen(8080, async () => {
     try {
-        await mongoose.connect("mongodb://localhost:27017/shipmart")
-        console.log("Connted to DB");
-        console.log(`Server is running at port ${PORT}`);
+        await connection;
+        console.log("connected to db");
+        console.log("Server is conneted to DB");
     } catch (error) {
         console.log(error);
     }
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
